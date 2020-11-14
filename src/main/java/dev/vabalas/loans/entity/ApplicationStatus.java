@@ -1,23 +1,22 @@
 package dev.vabalas.loans.entity;
 
-
-import dev.vabalas.loans.enums.RoleAuthority;
+import dev.vabalas.loans.enums.ApplicationStatusType;
 
 import javax.persistence.*;
 
 @Entity
-public class Role {
+public class ApplicationStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private RoleAuthority name;
+    private ApplicationStatusType name;
 
-    protected Role() {
+    protected ApplicationStatus() {
     }
 
-    public Role(RoleAuthority name) {
+    public ApplicationStatus(ApplicationStatusType name) {
         this.name = name;
     }
 
@@ -25,7 +24,7 @@ public class Role {
         return id;
     }
 
-    public RoleAuthority getName() {
+    public ApplicationStatusType getName() {
         return name;
     }
 }
