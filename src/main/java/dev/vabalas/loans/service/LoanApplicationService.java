@@ -2,6 +2,7 @@ package dev.vabalas.loans.service;
 
 import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.LoanApplication;
+import dev.vabalas.loans.enums.ApplicationStatusType;
 import dev.vabalas.loans.repository.LoanApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,9 @@ public class LoanApplicationService {
 
     public List<LoanApplication> getAppliedLoansForCustomer(Customer customer) {
         return loanApplicationRepository.findAllByAppliedBy(customer);
+    }
+
+    public List<LoanApplication> getPendingLoans() {
+        return loanApplicationRepository.findAllByStatus_NameEquals(ApplicationStatusType.PENDING);
     }
 }

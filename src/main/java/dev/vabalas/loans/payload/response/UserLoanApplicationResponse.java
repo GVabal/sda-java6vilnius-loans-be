@@ -3,17 +3,17 @@ package dev.vabalas.loans.payload.response;
 import dev.vabalas.loans.entity.ApplicationStatus;
 import dev.vabalas.loans.entity.LoanApplication;
 
-public class LoanApplicationResponse {
+public class UserLoanApplicationResponse {
     private final Integer amount;
     private final String status;
 
-    public LoanApplicationResponse(Integer amount, ApplicationStatus status) {
+    public UserLoanApplicationResponse(Integer amount, ApplicationStatus status) {
         this.amount = amount;
         this.status = status.getName().name();
     }
 
-    public static LoanApplicationResponse fromLoanApplication(LoanApplication loanApplication) {
-        return new LoanApplicationResponse(loanApplication.getAmount(), loanApplication.getStatus());
+    public static UserLoanApplicationResponse fromLoanApplication(LoanApplication loanApplication) {
+        return new UserLoanApplicationResponse(loanApplication.getAmount(), loanApplication.getStatus());
     }
 
     public Integer getAmount() {

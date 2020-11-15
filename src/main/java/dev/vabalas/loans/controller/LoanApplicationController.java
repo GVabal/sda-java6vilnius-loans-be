@@ -3,7 +3,8 @@ package dev.vabalas.loans.controller;
 import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.LoanApplication;
 import dev.vabalas.loans.entity.User;
-import dev.vabalas.loans.payload.response.LoanApplicationResponse;
+import dev.vabalas.loans.payload.response.EmployeeLoanApplicationResponse;
+import dev.vabalas.loans.payload.response.UserLoanApplicationResponse;
 import dev.vabalas.loans.security.TokenParser;
 import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.LoanApplicationService;
@@ -30,9 +31,9 @@ public class LoanApplicationController {
         this.tokenParser = tokenParser;
     }
 
-    @GetMapping
+    @GetMapping("customer")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public List<LoanApplicationResponse> getAppliedLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
+    public List<UserLoanApplicationResponse> getAppliedLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
         // TODO Make new method in TokenParser that combines two methods into one.
         String accessTokenWithNoPrefix = tokenParser.removePrefix(accessToken);
         String email = tokenParser.parseEmail(accessTokenWithNoPrefix);
@@ -40,12 +41,25 @@ public class LoanApplicationController {
         User user = userService.findByEmail(email).get();
         Customer customer = customerService.getCustomerById(user.getId());
         List<LoanApplication> loans = loanApplicationService.getAppliedLoansForCustomer(customer);
-        return generateLoanApplicationResponse(loans);
+        return generateUserLoanApplicationResponse(loans);
     }
 
-    private List<LoanApplicationResponse> generateLoanApplicationResponse(List<LoanApplication> loans) {
+    @GetMapping("employee")
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    public List<EmployeeLoanApplicationResponse> getAllPendingLoans() {
+        List<LoanApplication> loans = loanApplicationService.getPendingLoans();
+        return generateEmployeeLoanApplicationResponse(loans);
+    }
+
+    private List<UserLoanApplicationResponse> generateUserLoanApplicationResponse(List<LoanApplication> loans) {
         return loans.stream()
-                .map(LoanApplicationResponse::fromLoanApplication)
+                .map(UserLoanApplicationResponse::fromLoanApplication)
+                .collect(Collectors.toList());
+    }
+
+    private List<EmployeeLoanApplicationResponse> generateEmployeeLoanApplicationResponse(List<LoanApplication> loans) {
+        return loans.stream()
+                .map(EmployeeLoanApplicationResponse::fromLoanApplication)
                 .collect(Collectors.toList());
     }
 }
