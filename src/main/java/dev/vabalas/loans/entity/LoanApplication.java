@@ -1,5 +1,7 @@
 package dev.vabalas.loans.entity;
 
+import dev.vabalas.loans.enums.ApplicationStatusType;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +13,7 @@ public class LoanApplication {
     private Integer amount;
     private boolean isTakenByCustomer;
 
-    @OneToOne()
+    @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private ApplicationStatus status;
 
@@ -56,5 +58,13 @@ public class LoanApplication {
 
     public Customer getAppliedBy() {
         return appliedBy;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
+    public void setApprovedBy(Employee approvedBy) {
+        this.approvedBy = approvedBy;
     }
 }
