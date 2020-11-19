@@ -54,7 +54,7 @@ public class AuthController {
             throw new UserExistsException(
                     String.format("User with username %s already exists", userCreateRequest.getUsername()));
         }
-        Role role = roleService.mustFindByName(RoleAuthority.ROLE_USER);
+        Role role = roleService.mustFindByName(RoleAuthority.ROLE_CUSTOMER);
         User user =
                 userCreateRequest.asUser(passwordEncoder.encode(userCreateRequest.getPassword()), role);
         userService.save(user);

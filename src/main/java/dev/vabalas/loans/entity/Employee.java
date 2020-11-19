@@ -15,10 +15,4 @@ public class Employee {
 
     private String pid;
     private String email;
-
-    public Employee(Long id, String pid, String email) {
-        this.id = id;
-        this.pid = pid;
-        this.email = email;
-    }
 }

@@ -17,12 +17,4 @@ public class Customer {
     private String lastName;
     private String email;
     private String bankAccountNumber;
-
-    public Customer(Long id, String firstName, String lastName, String email, String bankAccountNumber) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.bankAccountNumber = bankAccountNumber;
-    }
 }
