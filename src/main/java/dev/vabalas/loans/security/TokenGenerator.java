@@ -5,6 +5,7 @@ import dev.vabalas.loans.enums.TokenType;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -12,14 +13,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Component
 public class TokenGenerator {
 
     private final TokenProperties tokenProperties;
-
-    public TokenGenerator(TokenProperties tokenProperties) {
-        this.tokenProperties = tokenProperties;
-    }
 
     public String generate(User user, TokenType tokenType, long expirationSeconds) {
         Map<String, Object> claims = new HashMap<>();

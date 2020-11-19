@@ -4,15 +4,13 @@ import dev.vabalas.loans.entity.Role;
 import dev.vabalas.loans.enums.RoleAuthority;
 import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
-
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     public Role mustFindByName(RoleAuthority name) {
         return roleRepository

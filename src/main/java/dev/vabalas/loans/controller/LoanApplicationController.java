@@ -3,49 +3,36 @@ package dev.vabalas.loans.controller;
 import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.Employee;
 import dev.vabalas.loans.entity.LoanApplication;
-import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.payload.response.EmployeeLoanApplicationResponse;
-import dev.vabalas.loans.payload.response.UserLoanApplicationResponse;
+import dev.vabalas.loans.payload.response.CustomerLoanApplicationResponse;
 import dev.vabalas.loans.security.TokenParser;
 import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.EmployeeService;
 import dev.vabalas.loans.service.LoanApplicationService;
-import dev.vabalas.loans.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/loan-applications")
 public class LoanApplicationController {
 
     private final EmployeeService employeeService;
-    private final UserService userService;
     private final CustomerService customerService;
     private final LoanApplicationService loanApplicationService;
     private final TokenParser tokenParser;
 
-    public LoanApplicationController(EmployeeService employeeService, UserService userService, CustomerService customerService, LoanApplicationService loanApplicationService, TokenParser tokenParser) {
-        this.employeeService = employeeService;
-        this.userService = userService;
-        this.customerService = customerService;
-        this.loanApplicationService = loanApplicationService;
-        this.tokenParser = tokenParser;
-    }
-
     @GetMapping("customer")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public List<UserLoanApplicationResponse> getAppliedLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
-        // TODO Make new method in TokenParser that combines two methods into one.
-        String accessTokenWithNoPrefix = tokenParser.removePrefix(accessToken);
-        String email = tokenParser.parseEmail(accessTokenWithNoPrefix);
-        // TODO add email field to customer, so no userService would be needed here
-        User user = userService.findByEmail(email).get();
-        Customer customer = customerService.getCustomerById(user.getId());
+    public List<CustomerLoanApplicationResponse> getAppliedLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
+        String email = tokenParser.extractEmailString(accessToken);
+        Customer customer = customerService.findByEmail(email);
         List<LoanApplication> loans = loanApplicationService.getAppliedLoansForCustomer(customer);
-        return generateUserLoanApplicationResponse(loans);
+        return generateCustomerLoanApplicationResponse(loans);
     }
 
     @GetMapping("employee")
@@ -58,26 +45,22 @@ public class LoanApplicationController {
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("employee/approve/{id}")
     public void approveLoanWithId(@PathVariable Long id, @RequestHeader(value = "Authorization") String accessToken) {
-        String accessTokenWithNoPrefix = tokenParser.removePrefix(accessToken);
-        String email = tokenParser.parseEmail(accessTokenWithNoPrefix);
-        User user = userService.findByEmail(email).get();
-        Employee employee = employeeService.getEmployeeById(user.getId());
+        String email = tokenParser.extractEmailString(accessToken);
+        Employee employee = employeeService.findByEmail(email);
         loanApplicationService.approveLoanWithId(id, employee);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("employee/reject/{id}")
     public void rejectLoanWithId(@PathVariable Long id, @RequestHeader(value = "Authorization") String accessToken) {
-        String accessTokenWithNoPrefix = tokenParser.removePrefix(accessToken);
-        String email = tokenParser.parseEmail(accessTokenWithNoPrefix);
-        User user = userService.findByEmail(email).get();
-        Employee employee = employeeService.getEmployeeById(user.getId());
+        String email = tokenParser.extractEmailString(accessToken);
+        Employee employee = employeeService.findByEmail(email);
         loanApplicationService.rejectLoanWithId(id, employee);
     }
 
-    private List<UserLoanApplicationResponse> generateUserLoanApplicationResponse(List<LoanApplication> loans) {
+    private List<CustomerLoanApplicationResponse> generateCustomerLoanApplicationResponse(List<LoanApplication> loans) {
         return loans.stream()
-                .map(UserLoanApplicationResponse::fromLoanApplication)
+                .map(CustomerLoanApplicationResponse::fromLoanApplication)
                 .collect(Collectors.toList());
     }
 

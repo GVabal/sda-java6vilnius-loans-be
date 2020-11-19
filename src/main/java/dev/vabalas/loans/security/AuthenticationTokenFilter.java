@@ -2,7 +2,7 @@ package dev.vabalas.loans.security;
 
 import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.enums.TokenType;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,24 +17,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
     private final TokenProperties tokenProperties;
     private final UserDetailsService userDetailsService;
     private final TokenParser tokenParser;
     private final TokenValidator tokenValidator;
-
-    public AuthenticationTokenFilter(
-            TokenProperties tokenProperties,
-            @Qualifier("userAuthService")
-            UserDetailsService userDetailsService,
-            TokenParser tokenParser,
-            TokenValidator tokenValidator) {
-        this.tokenProperties = tokenProperties;
-        this.userDetailsService = userDetailsService;
-        this.tokenParser = tokenParser;
-        this.tokenValidator = tokenValidator;
-    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
