@@ -1,8 +1,13 @@
 package dev.vabalas.loans.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class Customer {
     @Id
@@ -10,31 +15,14 @@ public class Customer {
 
     private String firstName;
     private String lastName;
+    private String email;
     private String bankAccountNumber;
 
-    protected Customer() {
-    }
-
-    public Customer(Long id, String firstName, String lastName, String bankAccountNumber) {
+    public Customer(Long id, String firstName, String lastName, String email, String bankAccountNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.bankAccountNumber = bankAccountNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
     }
 }

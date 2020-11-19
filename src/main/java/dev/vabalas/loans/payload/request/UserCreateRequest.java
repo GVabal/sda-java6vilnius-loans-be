@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.vabalas.loans.entity.Role;
 import dev.vabalas.loans.entity.User;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+@Data
 public class UserCreateRequest {
 
     @NotBlank(message = "username must be set")
@@ -32,17 +34,5 @@ public class UserCreateRequest {
 
     public User asUser(String hashedPassword, Role role) {
         return new User(username, email, hashedPassword, role);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

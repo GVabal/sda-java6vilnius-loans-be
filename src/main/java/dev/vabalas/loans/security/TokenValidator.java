@@ -2,18 +2,16 @@ package dev.vabalas.loans.security;
 
 import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.enums.TokenType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@RequiredArgsConstructor
 @Component
 public class TokenValidator {
 
     private final TokenParser tokenParser;
-
-    public TokenValidator(TokenParser tokenParser) {
-        this.tokenParser = tokenParser;
-    }
 
     public boolean isValid(String token, TokenType tokenType, User user) {
         String email = tokenParser.parseEmail(token);

@@ -1,5 +1,7 @@
 package dev.vabalas.loans.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -7,6 +9,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class User implements UserDetails {
     @Id
@@ -21,9 +25,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    protected User() {
-    }
-
     public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
@@ -31,26 +32,14 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public long getId() {
-        return id;
-    }
-
     @Override
     public String getUsername() {
         return username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public Role getRole() {
-        return role;
     }
 
     @Override

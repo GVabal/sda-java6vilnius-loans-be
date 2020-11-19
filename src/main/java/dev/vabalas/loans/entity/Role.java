@@ -2,9 +2,13 @@ package dev.vabalas.loans.entity;
 
 
 import dev.vabalas.loans.enums.RoleAuthority;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class Role {
     @Id
@@ -14,18 +18,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleAuthority name;
 
-    protected Role() {
-    }
-
     public Role(RoleAuthority name) {
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public RoleAuthority getName() {
-        return name;
     }
 }

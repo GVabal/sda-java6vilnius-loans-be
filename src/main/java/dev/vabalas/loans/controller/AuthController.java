@@ -16,7 +16,7 @@ import dev.vabalas.loans.security.TokenParser;
 import dev.vabalas.loans.security.TokenValidator;
 import dev.vabalas.loans.service.RoleService;
 import dev.vabalas.loans.service.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -42,26 +43,6 @@ public class AuthController {
     private final TokenGenerator tokenGenerator;
     private final TokenParser tokenParser;
     private final TokenValidator tokenValidator;
-
-    public AuthController(
-            UserService userService,
-            RoleService roleService,
-            PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager,
-            @Qualifier("userAuthService")
-            UserDetailsService userDetailsService,
-            TokenGenerator tokenGenerator,
-            TokenParser tokenParser,
-            TokenValidator tokenValidator) {
-        this.userService = userService;
-        this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.tokenGenerator = tokenGenerator;
-        this.tokenParser = tokenParser;
-        this.tokenValidator = tokenValidator;
-    }
 
     @PostMapping("/register")
     public void register(@RequestBody @Valid UserCreateRequest userCreateRequest) {

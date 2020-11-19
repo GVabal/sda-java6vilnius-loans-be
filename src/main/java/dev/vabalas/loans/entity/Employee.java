@@ -1,28 +1,24 @@
 package dev.vabalas.loans.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class Employee {
     @Id
     private Long id;
 
     private String pid;
+    private String email;
 
-    protected Employee() {
-    }
-
-    public Employee(Long id, String pid) {
+    public Employee(Long id, String pid, String email) {
         this.id = id;
         this.pid = pid;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getPid() {
-        return pid;
+        this.email = email;
     }
 }
