@@ -3,7 +3,7 @@ package dev.vabalas.loans.service;
 import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.Employee;
 import dev.vabalas.loans.entity.LoanApplication;
-import dev.vabalas.loans.enums.ApplicationStatus;
+import dev.vabalas.loans.entity.ApplicationStatus;
 import dev.vabalas.loans.repository.LoanApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

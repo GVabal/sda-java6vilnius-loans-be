@@ -1,6 +1,5 @@
 package dev.vabalas.loans.entity;
 
-import dev.vabalas.loans.enums.ApplicationStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,6 @@
 package dev.vabalas.loans.security;
 
 import dev.vabalas.loans.entity.User;
-import dev.vabalas.loans.enums.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package dev.vabalas.loans.service;
 
 import dev.vabalas.loans.entity.Role;
-import dev.vabalas.loans.enums.RoleAuthority;
+import dev.vabalas.loans.entity.RoleAuthority;
 import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dev.vabalas.loans.enums;
+package dev.vabalas.loans.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

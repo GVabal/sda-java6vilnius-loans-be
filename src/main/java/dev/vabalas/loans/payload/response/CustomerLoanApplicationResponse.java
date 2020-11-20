@@ -1,7 +1,7 @@
 package dev.vabalas.loans.payload.response;
 
 import dev.vabalas.loans.entity.LoanApplication;
-import dev.vabalas.loans.enums.ApplicationStatus;
+import dev.vabalas.loans.entity.ApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

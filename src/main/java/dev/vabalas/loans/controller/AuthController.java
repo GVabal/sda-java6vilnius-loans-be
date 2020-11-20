@@ -2,8 +2,8 @@ package dev.vabalas.loans.controller;
 
 import dev.vabalas.loans.entity.Role;
 import dev.vabalas.loans.entity.User;
-import dev.vabalas.loans.enums.RoleAuthority;
-import dev.vabalas.loans.enums.TokenType;
+import dev.vabalas.loans.entity.RoleAuthority;
+import dev.vabalas.loans.security.TokenType;
 import dev.vabalas.loans.exception.UnauthorizedException;
 import dev.vabalas.loans.exception.UserExistsException;
 import dev.vabalas.loans.payload.request.LoginRequest;

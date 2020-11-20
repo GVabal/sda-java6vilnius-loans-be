@@ -1,4 +1,4 @@
-package dev.vabalas.loans.enums;
+package dev.vabalas.loans.entity;
 
 public enum ApplicationStatus {
     PENDING,

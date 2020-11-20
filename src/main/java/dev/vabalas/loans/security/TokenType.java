@@ -1,4 +1,4 @@
-package dev.vabalas.loans.enums;
+package dev.vabalas.loans.security;
 
 public enum TokenType {
     ACCESS_TOKEN,

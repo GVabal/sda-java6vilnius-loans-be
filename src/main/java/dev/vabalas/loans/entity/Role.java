@@ -1,7 +1,6 @@
 package dev.vabalas.loans.entity;
 
 
-import dev.vabalas.loans.enums.RoleAuthority;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

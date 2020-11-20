@@ -1,6 +1,5 @@
 package dev.vabalas.loans.security;
 
-import dev.vabalas.loans.enums.TokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
