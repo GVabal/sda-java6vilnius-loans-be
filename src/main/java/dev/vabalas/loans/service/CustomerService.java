@@ -1,6 +1,7 @@
 package dev.vabalas.loans.service;
 
 import dev.vabalas.loans.entity.Customer;
+import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,6 @@ public class CustomerService {
 
     public Customer findByEmail(String email) {
         return customerRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("No such customer"));
+                .orElseThrow(() -> new NotFoundException("Customer with email " + email));
     }
 }

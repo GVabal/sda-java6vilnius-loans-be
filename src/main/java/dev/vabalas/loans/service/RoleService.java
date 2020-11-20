@@ -15,6 +15,6 @@ public class RoleService {
     public Role mustFindByName(RoleAuthority name) {
         return roleRepository
                 .findByName(name)
-                .orElseThrow(() -> new NotFoundException(String.format("Role name %s", name)));
+                .orElseThrow(() -> new NotFoundException("Role " + name));
     }
 }

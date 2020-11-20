@@ -1,6 +1,7 @@
 package dev.vabalas.loans.service;
 
 import dev.vabalas.loans.entity.Employee;
+import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,6 @@ public class EmployeeService {
 
     public Employee findByEmail(String email) {
         return employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("No such employee"));
+                .orElseThrow(() -> new NotFoundException("Employee with email " + email));
     }
 }

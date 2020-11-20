@@ -4,6 +4,7 @@ import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.Employee;
 import dev.vabalas.loans.entity.LoanApplication;
 import dev.vabalas.loans.entity.ApplicationStatus;
+import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.LoanApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class LoanApplicationService {
 
     public void approveLoanWithId(Long id, Employee employee) {
         LoanApplication loan = loanApplicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No such loan"));
+                .orElseThrow(() -> new NotFoundException("Loan application with id " + id));
         loan.setStatus(ApplicationStatus.APPROVED);
         loan.setApprovedBy(employee);
         loanApplicationRepository.save(loan);
@@ -34,7 +35,7 @@ public class LoanApplicationService {
 
     public void rejectLoanWithId(Long id, Employee employee) {
         LoanApplication loan = loanApplicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No such loan"));
+                .orElseThrow(() -> new NotFoundException("Loan application with id " + id));
         loan.setStatus(ApplicationStatus.REJECTED);
         loan.setApprovedBy(employee);
         loanApplicationRepository.save(loan);
