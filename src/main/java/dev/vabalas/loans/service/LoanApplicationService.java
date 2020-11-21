@@ -30,6 +30,10 @@ public class LoanApplicationService {
         return loanApplicationRepository.findAllByStatus(ApplicationStatus.PENDING);
     }
 
+    public LoanApplication addNew(LoanApplication loanApplication) {
+        return loanApplicationRepository.save(loanApplication);
+    }
+
     public void approveLoanWithId(Long id, Employee employee) {
         LoanApplication loan = loanApplicationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Loan application with id " + id));

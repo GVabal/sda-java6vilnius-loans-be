@@ -1,6 +1,7 @@
 package dev.vabalas.loans.controller;
 
 import dev.vabalas.loans.entity.*;
+import dev.vabalas.loans.payload.request.LoanApplicationRequest;
 import dev.vabalas.loans.payload.response.EmployeeLoanApplicationResponse;
 import dev.vabalas.loans.payload.response.CustomerLoanApplicationResponse;
 import dev.vabalas.loans.security.TokenParser;
@@ -42,6 +43,14 @@ public class LoanApplicationController {
         return generateEmployeeLoanApplicationResponse(loans);
     }
 
+    @PostMapping("customer")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public CustomerLoanApplicationResponse addLoanApplication(@RequestHeader(value = "Authorization") String accessToken, @RequestBody LoanApplicationRequest loanApplicationRequest) {
+        String email = tokenParser.extractEmailString(accessToken);
+        Customer customer = customerService.findByEmail(email);
+        return generateCustomerLoanApplicationResponse(loanApplicationService.addNew(loanApplicationRequest.toLoanApplication(customer)));
+    }
+
     @PostMapping("customer/{id}")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public void takeLoanWithId(@RequestHeader(value = "Authorization") String accessToken, @PathVariable Long id) {
@@ -75,6 +84,10 @@ public class LoanApplicationController {
         return loans.stream()
                 .map(CustomerLoanApplicationResponse::fromLoanApplication)
                 .collect(Collectors.toList());
+    }
+
+    private CustomerLoanApplicationResponse generateCustomerLoanApplicationResponse(LoanApplication loan) {
+        return CustomerLoanApplicationResponse.fromLoanApplication(loan);
     }
 
     private List<EmployeeLoanApplicationResponse> generateEmployeeLoanApplicationResponse(List<LoanApplication> loans) {
