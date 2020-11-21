@@ -17,6 +17,11 @@ public class LoanApplicationService {
 
     private final LoanApplicationRepository loanApplicationRepository;
 
+    public LoanApplication getLoanApplication(Long id) {
+        return loanApplicationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Loan application with id " + id));
+    }
+
     public List<LoanApplication> getAppliedLoansForCustomer(Customer customer) {
         return loanApplicationRepository.findAllByAppliedBy(customer);
     }

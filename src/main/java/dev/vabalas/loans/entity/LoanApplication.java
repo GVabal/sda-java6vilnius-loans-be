@@ -16,7 +16,6 @@ public class LoanApplication {
     private Integer amount;
     private Integer termMonths;
     private Float interestRatePerYear;
-    private boolean isTakenByCustomer;
     private String loanReason;
 
     @Enumerated(EnumType.STRING)
