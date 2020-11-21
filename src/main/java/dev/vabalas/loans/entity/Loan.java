@@ -15,13 +15,13 @@ public class Loan {
 
     private Integer amountGranted;
     private Float amountToRepay;
-    private Integer amountPayed;
+    private Float amountPayed;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Loan(Integer amountGranted, Float amountToRepay, Integer amountPayed, Customer customer) {
+    public Loan(Integer amountGranted, Float amountToRepay, Float amountPayed, Customer customer) {
         this.amountGranted = amountGranted;
         this.amountToRepay = amountToRepay;
         this.amountPayed = amountPayed;
