@@ -13,18 +13,20 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer amountGranted;
     private Float amountToRepay;
     private Float amountPayed;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Loan(Integer amountGranted, Float amountToRepay, Float amountPayed, Customer customer) {
-        this.amountGranted = amountGranted;
+    public Loan( Float amountToRepay, Float amountPayed, Customer customer) {
         this.amountToRepay = amountToRepay;
         this.amountPayed = amountPayed;
         this.customer = customer;
+        this.status = Status.ACTIVE;
     }
 }

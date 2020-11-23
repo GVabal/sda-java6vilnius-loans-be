@@ -1,9 +1,6 @@
 package dev.vabalas.loans.service;
 
-import dev.vabalas.loans.entity.ApplicationStatus;
-import dev.vabalas.loans.entity.Customer;
-import dev.vabalas.loans.entity.Loan;
-import dev.vabalas.loans.entity.LoanApplication;
+import dev.vabalas.loans.entity.*;
 import dev.vabalas.loans.exception.NotFoundException;
 import dev.vabalas.loans.repository.LoanApplicationRepository;
 import dev.vabalas.loans.repository.LoanRepository;
@@ -26,14 +23,13 @@ public class LoanService {
                 .orElseThrow(() -> new NotFoundException("Loan with id " + id));
     }
 
-    public List<Loan> getLoansForCustomer(Customer customer) {
-        return loanRepository.findAllByCustomer(customer);
+    public List<Loan> getActiveLoansForCustomer(Customer customer) {
+        return loanRepository.findAllByCustomerAndStatusEquals(customer, Status.ACTIVE);
     }
 
     @Transactional
     public void grantLoan(LoanApplication loanApplication) {
         Loan loan = loanRepository.save(new Loan(
-                loanApplication.getAmount(),
                 calculateAmountToRepay(loanApplication),
                 0F,
                 loanApplication.getAppliedBy()

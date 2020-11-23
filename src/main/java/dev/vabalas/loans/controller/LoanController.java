@@ -25,10 +25,10 @@ public class LoanController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<Loan> getLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
+    public List<Loan> getActiveLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
-        List<Loan> loans = loanService.getLoansForCustomer(customer);
+        List<Loan> loans = loanService.getActiveLoansForCustomer(customer);
         return loans;
     }
 }

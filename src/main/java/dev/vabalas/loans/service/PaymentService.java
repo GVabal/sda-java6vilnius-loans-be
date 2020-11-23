@@ -16,8 +16,16 @@ public class PaymentService {
     @Transactional
     public void payBackLoan(Float amount, Loan loan, Customer customer) {
         paymentRepository.save(new Payment(PaymentType.INCOMING, amount, loan, customer));
-        loan.setAmountPayed(loan.getAmountPayed() + amount);
-        loan.setAmountToRepay(loan.getAmountToRepay() - amount);
+        Float newAmountPayed = loan.getAmountPayed() + amount;
+        Float newAmountToRepay;
+        if (newAmountPayed > loan.getAmountToRepay()) {
+            newAmountToRepay = 0F;
+            loan.setStatus(Status.TERMINATED);
+        }
+        else
+            newAmountToRepay = loan.getAmountToRepay() - amount;
+        loan.setAmountPayed(newAmountPayed);
+        loan.setAmountToRepay(newAmountToRepay);
     }
 
     public void payOutLoan(Loan loan, LoanApplication loanApplication) {
