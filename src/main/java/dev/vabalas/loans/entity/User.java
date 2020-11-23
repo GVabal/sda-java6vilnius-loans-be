@@ -25,11 +25,15 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.status = Status.ACTIVE;
     }
 
     @Override
@@ -64,6 +68,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return status.equals(Status.ACTIVE);
     }
 }
