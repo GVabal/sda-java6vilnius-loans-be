@@ -28,7 +28,7 @@ public class EmployeeController {
     @PostMapping("register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Employee addEmployee(@RequestBody UserCreateRequest userCreateRequest) {
-        authController.register(userCreateRequest);
+        authController.registerEmployee(userCreateRequest);
         User user = (User) userDetailsService.loadUserByUsername(userCreateRequest.getEmail());
         return employeeService.saveUserAsEmployee(user);
     }

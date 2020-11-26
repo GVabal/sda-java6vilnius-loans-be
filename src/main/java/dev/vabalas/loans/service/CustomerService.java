@@ -16,4 +16,8 @@ public class CustomerService {
         return customerRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Customer with email " + email));
     }
+
+    public void save(Customer customer) {
+        customerRepository.save(customer);
+    }
 }

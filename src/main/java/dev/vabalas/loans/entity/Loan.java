@@ -23,10 +23,15 @@ public class Loan {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Loan( Float amountToRepay, Float amountPayed, Customer customer) {
+    @OneToOne
+    @JoinColumn(name = "loan_application_id", nullable = false)
+    private LoanApplication loanApplication;
+
+    public Loan(Float amountToRepay, Float amountPayed, Customer customer, LoanApplication loanApplication) {
         this.amountToRepay = amountToRepay;
         this.amountPayed = amountPayed;
-        this.customer = customer;
         this.status = Status.ACTIVE;
+        this.customer = customer;
+        this.loanApplication = loanApplication;
     }
 }

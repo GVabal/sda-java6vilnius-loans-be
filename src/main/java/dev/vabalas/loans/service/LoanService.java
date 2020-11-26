@@ -32,7 +32,8 @@ public class LoanService {
         Loan loan = loanRepository.save(new Loan(
                 calculateAmountToRepay(loanApplication),
                 0F,
-                loanApplication.getAppliedBy()
+                loanApplication.getAppliedBy(),
+                loanApplication
                 ));
         loanApplication.setStatus(ApplicationStatus.TAKEN);
         loanApplicationRepository.save(loanApplication);

@@ -1,8 +1,10 @@
 package dev.vabalas.loans.controller;
 
+import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.Role;
 import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.entity.RoleAuthority;
+import dev.vabalas.loans.payload.request.CustomerCreateRequest;
 import dev.vabalas.loans.security.TokenType;
 import dev.vabalas.loans.exception.UnauthorizedException;
 import dev.vabalas.loans.exception.UserExistsException;
@@ -14,6 +16,7 @@ import dev.vabalas.loans.payload.response.UserResponse;
 import dev.vabalas.loans.security.TokenGenerator;
 import dev.vabalas.loans.security.TokenParser;
 import dev.vabalas.loans.security.TokenValidator;
+import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.RoleService;
 import dev.vabalas.loans.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final UserService userService;
+    private final CustomerService customerService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -45,7 +49,30 @@ public class AuthController {
     private final TokenValidator tokenValidator;
 
     @PostMapping("/register")
-    public void register(@RequestBody @Valid UserCreateRequest userCreateRequest) {
+    public void registerCustomer(@RequestBody @Valid CustomerCreateRequest customerCreateRequest) {
+        if (userService.existsByEmail(customerCreateRequest.getEmail())) {
+            throw new UserExistsException(
+                    String.format("User with email %s already exists", customerCreateRequest.getEmail()));
+        }
+        if (userService.existsByUsername(customerCreateRequest.getEmail())) {
+            throw new UserExistsException(
+                    String.format("User with username %s already exists", customerCreateRequest.getEmail()));
+        }
+        Role role = roleService.mustFindByName(RoleAuthority.ROLE_CUSTOMER);
+        User user = new User(
+                customerCreateRequest.getEmail(),
+                customerCreateRequest.getEmail(),
+                passwordEncoder.encode(customerCreateRequest.getPassword()),
+                role
+        );
+        userService.save(user);
+        User registeredUser = (User) userDetailsService.loadUserByUsername(customerCreateRequest.getEmail());
+        Customer customer = customerCreateRequest.toCustomer();
+        customer.setId(registeredUser.getId());
+        customerService.save(customer);
+    }
+
+    public void registerEmployee(@RequestBody @Valid UserCreateRequest userCreateRequest) {
         if (userService.existsByEmail(userCreateRequest.getEmail())) {
             throw new UserExistsException(
                     String.format("User with email %s already exists", userCreateRequest.getEmail()));

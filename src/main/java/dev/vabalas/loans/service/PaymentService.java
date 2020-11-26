@@ -18,9 +18,10 @@ public class PaymentService {
         paymentRepository.save(new Payment(PaymentType.INCOMING, amount, loan, customer));
         Float newAmountPayed = loan.getAmountPayed() + amount;
         Float newAmountToRepay;
-        if (newAmountPayed > loan.getAmountToRepay()) {
+        if (newAmountPayed >= loan.getAmountToRepay()) {
             newAmountToRepay = 0F;
             loan.setStatus(Status.TERMINATED);
+            loan.getLoanApplication().setStatus(ApplicationStatus.COMPLETED);
         }
         else
             newAmountToRepay = loan.getAmountToRepay() - amount;
