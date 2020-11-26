@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class LoanApplicationController {
 
     @PostMapping("customer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public CustomerLoanApplicationResponse addLoanApplication(@RequestHeader(value = "Authorization") String accessToken, @RequestBody LoanApplicationRequest loanApplicationRequest) {
+    public CustomerLoanApplicationResponse addLoanApplication(@RequestHeader(value = "Authorization") String accessToken, @RequestBody @Valid LoanApplicationRequest loanApplicationRequest) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         return generateCustomerLoanApplicationResponse(loanApplicationService.addNew(loanApplicationRequest.toLoanApplication(customer)));

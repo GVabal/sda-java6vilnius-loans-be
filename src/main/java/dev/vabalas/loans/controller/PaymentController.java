@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/payments")
@@ -23,7 +25,7 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public void payBackLoan(@RequestHeader(value = "Authorization") String accessToken, @RequestBody PaymentRequest paymentRequest) {
+    public void payBackLoan(@RequestHeader(value = "Authorization") String accessToken, @RequestBody @Valid PaymentRequest paymentRequest) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         Loan loan = loanService.getLoan(paymentRequest.getLoanId());

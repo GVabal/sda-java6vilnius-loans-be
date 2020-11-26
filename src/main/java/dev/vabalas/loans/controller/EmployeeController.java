@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class EmployeeController {
 
     @PostMapping("register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Employee addEmployee(@RequestBody UserCreateRequest userCreateRequest) {
+    public Employee addEmployee(@RequestBody @Valid UserCreateRequest userCreateRequest) {
         authController.registerEmployee(userCreateRequest);
         User user = (User) userDetailsService.loadUserByUsername(userCreateRequest.getEmail());
         return employeeService.saveUserAsEmployee(user);
