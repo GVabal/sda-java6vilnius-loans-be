@@ -1,2 +1,2 @@
-INSERT INTO employee(id, pid, email)
-VALUES  (3, 'P-82996288', 'employee@email.com');
+INSERT INTO employee(id, pid, email, status)
+VALUES  (3, 'E82996288', 'employee@email.com', 'ACTIVE');

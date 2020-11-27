@@ -25,7 +25,8 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public void payBackLoan(@RequestHeader(value = "Authorization") String accessToken, @RequestBody @Valid PaymentRequest paymentRequest) {
+    public void payBackLoan(@RequestHeader(value = "Authorization") String accessToken,
+                            @RequestBody @Valid PaymentRequest paymentRequest) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         Loan loan = loanService.getLoan(paymentRequest.getLoanId());

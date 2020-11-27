@@ -11,20 +11,20 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class CustomerCreateRequest {
 
-    @NotBlank(message = "first name must be set")
+    @NotBlank(message = "First name must be set")
     private final String firstName;
 
-    @NotBlank(message = "last name must be set")
+    @NotBlank(message = "Last name must be set")
     private final String lastName;
 
-    @NotBlank(message = "email must be set")
+    @NotBlank(message = "Email must be set")
     @Email
     private final String email;
 
-    @NotBlank(message = "password must be set")
+    @NotBlank(message = "Password must be set")
     private final String password;
 
-    @NotBlank(message = "bank account number must be set")
+    @NotBlank(message = "Bank account number must be set")
     private final String bankAccountNumber;
 
     @JsonCreator

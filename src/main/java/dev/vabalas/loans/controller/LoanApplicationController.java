@@ -30,7 +30,8 @@ public class LoanApplicationController {
 
     @GetMapping("customer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public List<CustomerLoanApplicationResponse> getAppliedLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
+    public List<CustomerLoanApplicationResponse> getAppliedLoansByTokenEmail(
+            @RequestHeader(value = "Authorization") String accessToken) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         List<LoanApplication> loans = loanApplicationService.getAppliedLoansForCustomer(customer);
@@ -46,10 +47,13 @@ public class LoanApplicationController {
 
     @PostMapping("customer")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    public CustomerLoanApplicationResponse addLoanApplication(@RequestHeader(value = "Authorization") String accessToken, @RequestBody @Valid LoanApplicationRequest loanApplicationRequest) {
+    public CustomerLoanApplicationResponse addLoanApplication(
+            @RequestHeader(value = "Authorization") String accessToken,
+            @RequestBody @Valid LoanApplicationRequest loanApplicationRequest) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
-        return generateCustomerLoanApplicationResponse(loanApplicationService.addNew(loanApplicationRequest.toLoanApplication(customer)));
+        return generateCustomerLoanApplicationResponse(
+                loanApplicationService.addNew(loanApplicationRequest.toLoanApplication(customer)));
     }
 
     @PostMapping("customer/{id}")
@@ -58,7 +62,8 @@ public class LoanApplicationController {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         LoanApplication loanApplication = loanApplicationService.getLoanApplication(id);
-        if (loanApplication.getAppliedBy() == customer && loanApplication.getStatus().equals(ApplicationStatus.APPROVED)) {
+        if (loanApplication.getAppliedBy() == customer
+                && loanApplication.getStatus().equals(ApplicationStatus.APPROVED)) {
             loanService.grantLoan(loanApplication);
         } else {
             throw new RuntimeException("Cannot grant loan");

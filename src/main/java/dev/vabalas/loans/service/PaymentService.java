@@ -19,17 +19,22 @@ public class PaymentService {
         Float newAmountPayed = loan.getAmountPayed() + amount;
         Float newAmountToRepay;
         if (newAmountPayed >= loan.getAmountToRepay()) {
+            newAmountPayed = loan.getAmountToRepay();
             newAmountToRepay = 0F;
             loan.setStatus(Status.TERMINATED);
             loan.getLoanApplication().setStatus(ApplicationStatus.COMPLETED);
-        }
-        else
+        } else
             newAmountToRepay = loan.getAmountToRepay() - amount;
+
         loan.setAmountPayed(newAmountPayed);
         loan.setAmountToRepay(newAmountToRepay);
     }
 
     public void payOutLoan(Loan loan, LoanApplication loanApplication) {
-        paymentRepository.save(new Payment(PaymentType.OUTGOING, Float.parseFloat(loanApplication.getAmount().toString()), loan, loanApplication.getAppliedBy()));
+        paymentRepository.save(new Payment(
+                PaymentType.OUTGOING,
+                Float.parseFloat(loanApplication.getAmount().toString()),
+                loan,
+                loanApplication.getAppliedBy()));
     }
 }

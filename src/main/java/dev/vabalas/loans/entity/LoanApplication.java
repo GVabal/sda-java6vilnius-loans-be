@@ -29,7 +29,9 @@ public class LoanApplication {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer appliedBy;
 
-    public LoanApplication(Integer amount, Integer termMonths, Float interestRatePerYear, String loanReason, ApplicationStatus status, Employee approvedBy, Customer appliedBy) {
+    public LoanApplication(Integer amount, Integer termMonths, Float interestRatePerYear,
+                           String loanReason, ApplicationStatus status, Employee approvedBy,
+                           Customer appliedBy) {
         this.amount = amount;
         this.termMonths = termMonths;
         this.interestRatePerYear = interestRatePerYear;

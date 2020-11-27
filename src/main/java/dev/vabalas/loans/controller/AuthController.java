@@ -10,7 +10,6 @@ import dev.vabalas.loans.exception.UnauthorizedException;
 import dev.vabalas.loans.exception.UserExistsException;
 import dev.vabalas.loans.payload.request.LoginRequest;
 import dev.vabalas.loans.payload.request.RefreshTokenRequest;
-import dev.vabalas.loans.payload.request.UserCreateRequest;
 import dev.vabalas.loans.payload.response.AuthResponse;
 import dev.vabalas.loans.payload.response.UserResponse;
 import dev.vabalas.loans.security.TokenGenerator;
@@ -54,10 +53,6 @@ public class AuthController {
             throw new UserExistsException(
                     String.format("User with email %s already exists", customerCreateRequest.getEmail()));
         }
-        if (userService.existsByUsername(customerCreateRequest.getEmail())) {
-            throw new UserExistsException(
-                    String.format("User with username %s already exists", customerCreateRequest.getEmail()));
-        }
         Role role = roleService.mustFindByName(RoleAuthority.ROLE_CUSTOMER);
         User user = new User(
                 customerCreateRequest.getEmail(),
@@ -72,26 +67,10 @@ public class AuthController {
         customerService.save(customer);
     }
 
-    public void registerEmployee(@RequestBody @Valid UserCreateRequest userCreateRequest) {
-        if (userService.existsByEmail(userCreateRequest.getEmail())) {
-            throw new UserExistsException(
-                    String.format("User with email %s already exists", userCreateRequest.getEmail()));
-        }
-        if (userService.existsByUsername(userCreateRequest.getUsername())) {
-            throw new UserExistsException(
-                    String.format("User with username %s already exists", userCreateRequest.getUsername()));
-        }
-        Role role = roleService.mustFindByName(RoleAuthority.ROLE_CUSTOMER);
-        User user =
-                userCreateRequest.asUser(passwordEncoder.encode(userCreateRequest.getPassword()), role);
-        userService.save(user);
-    }
-
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
                                 loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

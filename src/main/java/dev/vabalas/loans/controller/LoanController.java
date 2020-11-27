@@ -28,7 +28,6 @@ public class LoanController {
     public List<Loan> getActiveLoansByTokenEmail(@RequestHeader(value = "Authorization") String accessToken) {
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
-        List<Loan> loans = loanService.getActiveLoansForCustomer(customer);
-        return loans;
+        return loanService.getActiveLoansForCustomer(customer);
     }
 }

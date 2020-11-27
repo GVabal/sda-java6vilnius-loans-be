@@ -12,27 +12,22 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserCreateRequest {
 
-    @NotBlank(message = "username must be set")
-    private final String username;
-
-    @NotBlank(message = "email must be set")
+    @NotBlank(message = "Email must be set")
     @Email
     private final String email;
 
-    @NotBlank(message = "password must be set")
+    @NotBlank(message = "Password must be set")
     private final String password;
 
     @JsonCreator
     public UserCreateRequest(
-            @JsonProperty("username") String username,
             @JsonProperty("email") String email,
             @JsonProperty("password") String password) {
-        this.username = username;
         this.email = email;
         this.password = password;
     }
 
     public User asUser(String hashedPassword, Role role) {
-        return new User(username, email, hashedPassword, role);
+        return new User(email, email, hashedPassword, role);
     }
 }

@@ -41,7 +41,9 @@ public class LoanService {
     }
 
     private Float calculateAmountToRepay(LoanApplication loanApplication) {
-        Float extraAmount = (loanApplication.getTermMonths() / 12) * (loanApplication.getInterestRatePerYear() / 100) * loanApplication.getAmount();
+        Float extraAmount = (loanApplication.getTermMonths() / 12)
+                * (loanApplication.getInterestRatePerYear() / 100)
+                * loanApplication.getAmount();
         return loanApplication.getAmount() + extraAmount;
     }
 }
