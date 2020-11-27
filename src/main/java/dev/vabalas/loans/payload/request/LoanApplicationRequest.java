@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 public class LoanApplicationRequest {
     @NotNull(message = "Amount must be set.")
     @Min(value = 100, message = "Amount must be at least 100")
+    @Max(value = 15000, message = "Amount must be no more than 15000")
     private Integer amount;
     @NotNull(message = "Term must be set")
     @Min(value = 6, message = "Term must be at least 6 months")
