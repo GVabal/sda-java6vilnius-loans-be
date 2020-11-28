@@ -166,6 +166,46 @@ Requires header: `key: Authorization, value: Bearer JWT-token`
 Returns: `200OK`
 
 ----
+**`GET /api/loan-applications/employee`** - Gets all pending loans.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns:
+```
+[
+  {
+    "id": number,
+    "amount": number,
+    "termMonths": number,
+    "interestRatePerYear": number,
+    "loanReason": "string",
+    "customer": {
+      "id": number,
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string",
+      "bankAccountNumber": "string"
+    }
+  },
+  ...
+]
+```
+
+----
+**`POST /api/loan-applications/employee/approve/:id`** - Changes status of Loan Application to APPROVED.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns: `200OK`
+
+----
+**`POST /api/loan-applications/employee/reject/:id`** - Changes status of Loan Application to REJECTED.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns: `200OK`
+
+----
 ### Loans
 ### Employees
 ### Payments
