@@ -35,9 +35,22 @@ admin@email.com     | password
   * POST /api/auth/login
   * POST /api/auth/refresh-token
 * [Loan Applications](#loan-applications)
+  * customer
+    * GET /api/loan-applications/customer
+    * POST /api/loan-applications/customer
+    * POST /api/loan-applications/customer/:id
+  * employee
+    * GET /api/loan-applications/employee
+    * POST /api/loan-applications/employee/approve/:id
+    * POST /api/loan-applications/employee/reject/:id
 * [Loans](#loans)
+  * GET /api/loans
 * [Employees](#employees)
+  * GET /api/employees
+  * POST /api/employees/register
+  * DELETE /api/employees/:id
 * [Payments](#payments)
+  * POST /api/payments
 
 
 ### Authorization
