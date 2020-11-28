@@ -31,6 +31,9 @@ admin@email.com     | password
 
 ## Endpoints
 * [Authorization](#authorization)
+  * POST /api/auth/register
+  * POST /api/auth/login
+  * POST /api/auth/refresh-token
 * [Loan Applications](#loan-applications)
 * [Loans](#loans)
 * [Employees](#employees)
@@ -48,6 +51,13 @@ admin@email.com     | password
   "bankAccountNumber":"string"
 }
 ```
+Returns:
+```
+{
+  "some":"data"
+}
+```
+
 ----
 `POST /api/auth/login` - Receives JWT token for user. Requires body: 
 ```
