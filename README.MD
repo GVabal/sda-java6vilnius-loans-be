@@ -54,7 +54,7 @@ admin@email.com     | password
 
 
 ### Authorization
-**`POST /api/auth/register` - Registers new Customer. **
+**`POST /api/auth/register`** - Registers new Customer. 
 
 Requires body: 
 ```
@@ -79,7 +79,7 @@ Returns:
 ```
 
 ----
-**`POST /api/auth/login` - Receives JWT token for user. **
+**`POST /api/auth/login`** - Receives JWT token for user. 
 
 Requires body: 
 ```
@@ -91,7 +91,7 @@ Requires body:
 Returns: `200OK`
 
 ----
-**`POST /api/auth/refresh-token` - Refreshes JWT token for user. **
+**`POST /api/auth/refresh-token`** - Refreshes JWT token for user.
 
 Requires body: 
 ```
@@ -113,7 +113,7 @@ Returns:
 
 ----
 ### Loan Applications
-**`GET /api/loan-applications/customer` - Gets all loan applications for customer. **
+**`GET /api/loan-applications/customer`** - Gets all loan applications for customer.
 
 Requires header: `key: Authorization, value: Bearer JWT-token`
 
@@ -133,7 +133,7 @@ Returns:
 ```
 
 ----
-**`POST /api/loan-applications/customer` - Creates new Loan Application by customer. **
+**`POST /api/loan-applications/customer`** - Creates new Loan Application by customer.
 
 Requires header: `key: Authorization, value: Bearer JWT-token`
 
@@ -159,7 +159,7 @@ Returns:
 ```
 
 ----
-**`POST /api/loan-applications/customer/:<loan-application-id>` - Creates Loan by customer from Loan Application with APPROVED Application Status. **
+**`POST /api/loan-applications/customer/:<loan-application-id>`** - Creates Loan by customer from Loan Application with APPROVED Application Status.
 
 Requires header: `key: Authorization, value: Bearer JWT-token`
 
