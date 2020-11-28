@@ -282,3 +282,16 @@ Returns: `200OK`
 
 ----
 ### Payments
+**`POST /api/payments`** - Pays back the loan.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Requires body:
+```
+{
+  "loanId": number,
+  "amount": number
+}
+```
+
+Returns: `200OK`
