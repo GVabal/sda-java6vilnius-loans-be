@@ -1,7 +1,7 @@
 # Loans Service
 
 ### Run
-`./gradlew clean build && java -jar build/libs/*.jar`
+`./gradlew clean build bootRun`
 
 ### Endpoints
 `POST /api/auth/register` - Register new user with USER_ROLE. 
