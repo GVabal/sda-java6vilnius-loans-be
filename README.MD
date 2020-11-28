@@ -6,7 +6,7 @@ This is back-end part for https://github.com/GVabal/sda-java6vilnius-loans-fe
 
 Java 11, Spring Boot 2.3.5, Spring Data JPA, Spring Security, JWT, MySQL, Flyway, Gradle
 
-### Run this application locally:
+### Run this service locally:
 
 Requires MySQL server. After downloading the project, configure data source in <a href="https://github.com/GVabal/sda-java6vilnius-loans-be/blob/master/src/main/resources/application.properties">src/main/resources/application.properties</a> file:
 ```
@@ -31,13 +31,16 @@ admin@email.com     | password
 
 ## Endpoints
 * [Authorization](#authorization)
+  * POST /api/auth/register
+  * POST /api/auth/login
+  * POST /api/auth/refresh-token
 * [Loan Applications](#loan-applications)
 * [Loans](#loans)
 * [Employees](#employees)
 * [Payments](#payments)
 
 
-#### Authorization
+### Authorization
 `POST /api/auth/register` - Registers new Customer. Requires body: 
 ```
 {
@@ -48,7 +51,19 @@ admin@email.com     | password
   "bankAccountNumber":"string"
 }
 ```
+Returns:
+```
+{
+    "accessToken": "JTW token",
+    "refreshToken": "JWT token",
+    "user": {
+        "email": "string",
+        "role": ROLE[ROLE_CUSTOMER, ROLE_EMPLOYEE, ROLE_ADMIN]
+    }
+}
+```
 
+----
 `POST /api/auth/login` - Receives JWT token for user. Requires body: 
 ```
 {
@@ -56,15 +71,30 @@ admin@email.com     | password
   "password": "string"
 }
 ```
+Returns: `200OK`
 
+----
 `POST /api/auth/refresh-token` - Refreshes JWT token for user. Requires body: 
 ```
 {
-  "refreshToken": "string"
+  "refreshToken": "JWT token"
 }
 ```
-#### Loan Applications
+Returns:
+```
+{
+    "accessToken": "JTW token",
+    "refreshToken": "JWT token",
+    "user": {
+        "email": "string",
+        "role": ROLE[ROLE_CUSTOMER, ROLE_EMPLOYEE, ROLE_ADMIN]
+    }
+}
+```
+
+----
+### Loan Applications
 `GET /api/loan-applications/customer` - Gets all loan applications for user. Requires 
-#### Loans
-#### Employees
-#### Payments
+### Loans
+### Employees
+### Payments
