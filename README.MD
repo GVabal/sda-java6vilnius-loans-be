@@ -54,7 +54,12 @@ admin@email.com     | password
 Returns:
 ```
 {
-  "some":"data"
+    "accessToken": "JTW token",
+    "refreshToken": "JWT token",
+    "user": {
+        "email": "string",
+        "role": ROLE[ROLE_CUSTOMER, ROLE_EMPLOYEE, ROLE_ADMIN]
+    }
 }
 ```
 
