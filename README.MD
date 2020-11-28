@@ -159,7 +159,7 @@ Returns:
 ```
 
 ----
-**`POST /api/loan-applications/customer/:<loan-application-id>`** - Creates Loan by customer from Loan Application with APPROVED Application Status.
+**`POST /api/loan-applications/customer/:loan-application-id`** - Creates Loan by customer from Loan Application with APPROVED Application Status.
 
 Requires header: `key: Authorization, value: Bearer JWT-token`
 
@@ -232,4 +232,53 @@ Returns:
 
 ----
 ### Employees
+**`GET /api/employees`** - Gets all employees.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns:
+```
+[
+  {
+    "id": number,
+    "pid": "string",
+    "email": "string",
+    "status": Status[ACTIVE, TERMINATED]
+  },
+  ...
+]
+```
+
+----
+**`POST /api/employees/register`** - Add new employee.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Requires body:
+
+```
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+Returns:
+```
+{
+  "id": number,
+  "pid": "string",
+  "email": "string",
+  "status": Status[ACTIVE, TERMINATED]
+}
+```
+
+----
+**`DELETE /api/employees/:id`** - Disables/Terminates employee.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns: `200OK`
+
+----
 ### Payments
