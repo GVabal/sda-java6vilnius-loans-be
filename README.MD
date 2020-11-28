@@ -38,7 +38,7 @@ admin@email.com     | password
 
 
 #### Authorization
-`POST /api/auth/register` - Register new Customer. Requires body: 
+`POST /api/auth/register` - Registers new Customer. Requires body: 
 ```
 {
   "firstName":"string",
@@ -49,7 +49,7 @@ admin@email.com     | password
 }
 ```
 
-`POST /api/auth/login` - Receive JWT token for user. Requires body: 
+`POST /api/auth/login` - Receives JWT token for user. Requires body: 
 ```
 {
   "email": "string",
@@ -57,13 +57,14 @@ admin@email.com     | password
 }
 ```
 
-`POST /api/auth/refresh-token` - Refresh JWT token for user. Requires body: 
+`POST /api/auth/refresh-token` - Refreshes JWT token for user. Requires body: 
 ```
 {
   "refreshToken": "string"
 }
 ```
 #### Loan Applications
+`GET /api/loan-applications/customer` - Gets all loan applications for user. Requires 
 #### Loans
 #### Employees
 #### Payments
