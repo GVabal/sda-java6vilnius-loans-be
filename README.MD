@@ -207,5 +207,29 @@ Returns: `200OK`
 
 ----
 ### Loans
+**`GET /api/loans`** - Gets all active Loans for customer.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns:
+```
+[
+  {
+    "id": number,
+    "amountToRepay": number,
+    "amountPayed": number,
+    "status": Status[ACTIVE, TERMINATED],
+    "customer": {
+      "id": number,
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string",
+      "bankAccountNumber": "string"
+    }
+  ...
+]
+```
+
+----
 ### Employees
 ### Payments
