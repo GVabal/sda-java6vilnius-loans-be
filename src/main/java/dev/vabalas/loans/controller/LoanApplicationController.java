@@ -1,9 +1,13 @@
 package dev.vabalas.loans.controller;
 
-import dev.vabalas.loans.entity.*;
+import dev.vabalas.loans.entity.ApplicationStatus;
+import dev.vabalas.loans.entity.Customer;
+import dev.vabalas.loans.entity.Employee;
+import dev.vabalas.loans.entity.LoanApplication;
+import dev.vabalas.loans.exception.CannotGrantLoanException;
 import dev.vabalas.loans.payload.request.LoanApplicationRequest;
-import dev.vabalas.loans.payload.response.EmployeeLoanApplicationResponse;
 import dev.vabalas.loans.payload.response.CustomerLoanApplicationResponse;
+import dev.vabalas.loans.payload.response.EmployeeLoanApplicationResponse;
 import dev.vabalas.loans.security.TokenParser;
 import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.EmployeeService;
@@ -66,7 +70,7 @@ public class LoanApplicationController {
                 && loanApplication.getStatus().equals(ApplicationStatus.APPROVED)) {
             loanService.grantLoan(loanApplication);
         } else {
-            throw new RuntimeException("Cannot grant loan");
+            throw new CannotGrantLoanException("Cannot grant loan");
         }
     }
 

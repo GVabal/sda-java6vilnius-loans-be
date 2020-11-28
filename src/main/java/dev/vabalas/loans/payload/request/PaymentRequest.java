@@ -16,7 +16,7 @@ public class PaymentRequest {
     private Float amount;
 
     @JsonCreator
-    public PaymentRequest(@JsonProperty("loanId") Long loanId,@JsonProperty("amount") Float amount) {
+    public PaymentRequest(@JsonProperty("loanId") Long loanId, @JsonProperty("amount") Float amount) {
         this.loanId = loanId;
         this.amount = amount;
     }

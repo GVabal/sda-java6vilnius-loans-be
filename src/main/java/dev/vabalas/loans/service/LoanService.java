@@ -34,14 +34,14 @@ public class LoanService {
                 0F,
                 loanApplication.getAppliedBy(),
                 loanApplication
-                ));
+        ));
         loanApplication.setStatus(ApplicationStatus.TAKEN);
         loanApplicationRepository.save(loanApplication);
         paymentService.payOutLoan(loan, loanApplication);
     }
 
     private Float calculateAmountToRepay(LoanApplication loanApplication) {
-        Float extraAmount = (loanApplication.getTermMonths() / 12)
+        Float extraAmount = ((float) loanApplication.getTermMonths() / 12)
                 * (loanApplication.getInterestRatePerYear() / 100)
                 * loanApplication.getAmount();
         return loanApplication.getAmount() + extraAmount;

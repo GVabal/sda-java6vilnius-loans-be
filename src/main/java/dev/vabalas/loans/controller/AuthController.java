@@ -2,18 +2,18 @@ package dev.vabalas.loans.controller;
 
 import dev.vabalas.loans.entity.Customer;
 import dev.vabalas.loans.entity.Role;
-import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.entity.RoleAuthority;
-import dev.vabalas.loans.payload.request.CustomerCreateRequest;
-import dev.vabalas.loans.security.TokenType;
+import dev.vabalas.loans.entity.User;
 import dev.vabalas.loans.exception.UnauthorizedException;
 import dev.vabalas.loans.exception.UserExistsException;
+import dev.vabalas.loans.payload.request.CustomerCreateRequest;
 import dev.vabalas.loans.payload.request.LoginRequest;
 import dev.vabalas.loans.payload.request.RefreshTokenRequest;
 import dev.vabalas.loans.payload.response.AuthResponse;
 import dev.vabalas.loans.payload.response.UserResponse;
 import dev.vabalas.loans.security.TokenGenerator;
 import dev.vabalas.loans.security.TokenParser;
+import dev.vabalas.loans.security.TokenType;
 import dev.vabalas.loans.security.TokenValidator;
 import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.RoleService;
@@ -71,7 +71,7 @@ public class AuthController {
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                                loginRequest.getEmail(), loginRequest.getPassword()));
+                        loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) userDetailsService.loadUserByUsername(loginRequest.getEmail());

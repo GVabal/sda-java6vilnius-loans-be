@@ -17,7 +17,7 @@ public class PaymentService {
     public void payBackLoan(Float amount, Loan loan, Customer customer) {
         paymentRepository.save(new Payment(PaymentType.INCOMING, amount, loan, customer));
         Float newAmountPayed = loan.getAmountPayed() + amount;
-        Float newAmountToRepay;
+        float newAmountToRepay;
         if (newAmountPayed >= loan.getAmountToRepay()) {
             newAmountPayed = loan.getAmountToRepay();
             newAmountToRepay = 0F;

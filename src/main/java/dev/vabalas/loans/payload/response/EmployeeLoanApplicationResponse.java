@@ -10,9 +10,9 @@ import lombok.Data;
 public class EmployeeLoanApplicationResponse {
     private final Long id;
     private final Integer amount;
-    private Integer termMonths;
-    private Float interestRatePerYear;
-    private String loanReason;
+    private final Integer termMonths;
+    private final Float interestRatePerYear;
+    private final String loanReason;
     private final Customer customer;
 
     public static EmployeeLoanApplicationResponse fromLoanApplication(LoanApplication loanApplication) {
