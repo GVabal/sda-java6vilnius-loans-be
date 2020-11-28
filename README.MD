@@ -107,7 +107,44 @@ Returns:
 
 ----
 ### Loan Applications
-`GET /api/loan-applications/customer` - Gets all loan applications for user. Requires 
+`GET /api/loan-applications/customer` - Gets all loan applications for customer. 
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns:
+```
+[
+  {
+    "id": number,
+    "amount": number,
+    "termMonths": number,
+    "interestRatePerYear": number,
+    "loanReason": "string",
+    "status": ApplicationStatus[PENDING, APPROVED, REJECTED, TAKEN, COMPLETED]
+  },
+  ...
+]
+```
+
+----
+`POST /api/loan-applications/customer` - Creates new Loan Application by customer.
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns:
+```
+{
+  "id": number,
+  "amount": number,
+  "termMonths": number,
+  "interestRatePerYear": number,
+  "loanReason": "string",
+  "status": ApplicationStatus[PENDING, APPROVED, REJECTED, TAKEN, COMPLETED]
+}
+```
+
+----
+`POST /api/loan-applications/customer/:id`
 ### Loans
 ### Employees
 ### Payments
