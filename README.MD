@@ -15,7 +15,7 @@ spring.datasource.password={password}
 spring.datasource.url=jdbc:mysql://localhost:3306/{database}
 ```
 
-:exclamation: NOTE: `jwt.secret` is revealed intentionally, in production this should not be revealed.
+:exclamation: NOTE: `jwt.secret` is revealed intentionally, in production this property should be externalized.
 
 Then run `./gradlew clean build bootRun` command. The application will run on http://localhost:8080.
 
@@ -30,6 +30,12 @@ admin@email.com     | password
 ```
 
 ## Endpoints
+* [Authorization](#authorization)
+* [Loan Applications](#loan-applications)
+* [Loans](#loans)
+* [Employees](#employees)
+* [Payments](#payments)
+
 
 #### Authorization
 `POST /api/auth/register` - Register new Customer. Requires body: 
