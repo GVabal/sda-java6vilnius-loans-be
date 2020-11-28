@@ -131,6 +131,15 @@ Returns:
 
 Requires header: `key: Authorization, value: Bearer JWT-token`
 
+Requires body:
+```
+{
+  "amount": number,
+  "loanReason": "string",
+  "termMonths": number
+}
+```
+
 Returns:
 ```
 {
@@ -144,7 +153,13 @@ Returns:
 ```
 
 ----
-`POST /api/loan-applications/customer/:id`
+`POST /api/loan-applications/customer/:<loan-application-id>` - Creates Loan by customer from Loan Application with APPROVED Application Status
+
+Requires header: `key: Authorization, value: Bearer JWT-token`
+
+Returns: `200OK`
+
+----
 ### Loans
 ### Employees
 ### Payments
