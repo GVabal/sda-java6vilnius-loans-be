@@ -71,13 +71,27 @@ Returns:
   "password": "string"
 }
 ```
+Returns: `200OK`
+
 ----
 `POST /api/auth/refresh-token` - Refreshes JWT token for user. Requires body: 
 ```
 {
-  "refreshToken": "string"
+  "refreshToken": "JWT token"
 }
 ```
+Returns:
+```
+{
+    "accessToken": "JTW token",
+    "refreshToken": "JWT token",
+    "user": {
+        "email": "string",
+        "role": ROLE[ROLE_CUSTOMER, ROLE_EMPLOYEE, ROLE_ADMIN]
+    }
+}
+```
+
 ----
 ### Loan Applications
 `GET /api/loan-applications/customer` - Gets all loan applications for user. Requires 
