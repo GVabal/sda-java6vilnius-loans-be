@@ -1,4 +1,5 @@
 # Loans Service
+Application that very (very) naively imitates the process of taking and paying back a loan. Customers register on the website, where they can apply for a loan, manage currently active loans. Employees can approve or reject loan applications. Admin can manage the employees.
 
 This is back-end part for https://github.com/GVabal/sda-java6vilnius-loans-fe
 
