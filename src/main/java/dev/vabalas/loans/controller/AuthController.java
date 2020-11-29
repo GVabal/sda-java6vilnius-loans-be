@@ -19,6 +19,8 @@ import dev.vabalas.loans.service.CustomerService;
 import dev.vabalas.loans.service.RoleService;
 import dev.vabalas.loans.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,7 +38,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
     private final CustomerService customerService;
     private final RoleService roleService;
@@ -49,6 +51,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public void registerCustomer(@RequestBody @Valid CustomerCreateRequest customerCreateRequest) {
+        LOGGER.info("POST /api/auth/register");
         if (userService.existsByEmail(customerCreateRequest.getEmail())) {
             throw new UserExistsException(
                     String.format("User with email %s already exists", customerCreateRequest.getEmail()));
@@ -69,6 +72,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+        LOGGER.info("POST /api/auth/login");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(), loginRequest.getPassword()));
@@ -80,6 +84,7 @@ public class AuthController {
 
     @PostMapping("/refresh-token")
     public AuthResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        LOGGER.info("POST /api/auth/refresh-token");
         String refreshToken = tokenParser.removePrefix(refreshTokenRequest.getRefreshToken());
         String email = tokenParser.parseEmail(refreshToken);
         if (refreshToken == null || email == null) {

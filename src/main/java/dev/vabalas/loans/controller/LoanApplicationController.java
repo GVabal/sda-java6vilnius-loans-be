@@ -14,6 +14,8 @@ import dev.vabalas.loans.service.EmployeeService;
 import dev.vabalas.loans.service.LoanApplicationService;
 import dev.vabalas.loans.service.LoanService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/loan-applications")
 public class LoanApplicationController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoanApplicationController.class);
     private final EmployeeService employeeService;
     private final CustomerService customerService;
     private final LoanApplicationService loanApplicationService;
@@ -36,6 +38,7 @@ public class LoanApplicationController {
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public List<CustomerLoanApplicationResponse> getAppliedLoansByTokenEmail(
             @RequestHeader(value = "Authorization") String accessToken) {
+        LOGGER.info("GET /api/loan-applications/customer");
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         List<LoanApplication> loans = loanApplicationService.getAppliedLoansForCustomer(customer);
@@ -45,6 +48,7 @@ public class LoanApplicationController {
     @GetMapping("employee")
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     public List<EmployeeLoanApplicationResponse> getAllPendingLoans() {
+        LOGGER.info("GET /api/loan-applications/employee");
         List<LoanApplication> loans = loanApplicationService.getPendingLoans();
         return generateEmployeeLoanApplicationResponse(loans);
     }
@@ -54,6 +58,7 @@ public class LoanApplicationController {
     public CustomerLoanApplicationResponse addLoanApplication(
             @RequestHeader(value = "Authorization") String accessToken,
             @RequestBody @Valid LoanApplicationRequest loanApplicationRequest) {
+        LOGGER.info("POST /api/loan-applications/customer");
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         return generateCustomerLoanApplicationResponse(
@@ -63,6 +68,7 @@ public class LoanApplicationController {
     @PostMapping("customer/{id}")
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public void takeLoanWithId(@RequestHeader(value = "Authorization") String accessToken, @PathVariable Long id) {
+        LOGGER.info("POST /api/loan-applications/customer/{}", id);
         String email = tokenParser.extractEmailString(accessToken);
         Customer customer = customerService.findByEmail(email);
         LoanApplication loanApplication = loanApplicationService.getLoanApplication(id);
@@ -77,6 +83,7 @@ public class LoanApplicationController {
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("employee/approve/{id}")
     public void approveLoanWithId(@PathVariable Long id, @RequestHeader(value = "Authorization") String accessToken) {
+        LOGGER.info("POST /api/loan-applications/employee/approve/{}", id);
         String email = tokenParser.extractEmailString(accessToken);
         Employee employee = employeeService.findByEmail(email);
         loanApplicationService.approveLoanWithId(id, employee);
@@ -85,6 +92,7 @@ public class LoanApplicationController {
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("employee/reject/{id}")
     public void rejectLoanWithId(@PathVariable Long id, @RequestHeader(value = "Authorization") String accessToken) {
+        LOGGER.info("POST /api/loan-applications/employee/reject/{}", id);
         String email = tokenParser.extractEmailString(accessToken);
         Employee employee = employeeService.findByEmail(email);
         loanApplicationService.rejectLoanWithId(id, employee);

@@ -10,6 +10,8 @@ import dev.vabalas.loans.service.EmployeeService;
 import dev.vabalas.loans.service.RoleService;
 import dev.vabalas.loans.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/employees")
 public class EmployeeController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;
     private final UserDetailsService userDetailsService;
     private final UserService userService;
@@ -31,12 +34,14 @@ public class EmployeeController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Employee> getAllEmployees() {
+        LOGGER.info("GET /api/employees");
         return employeeService.findAll();
     }
 
     @PostMapping("register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Employee addEmployee(@RequestBody @Valid UserCreateRequest userCreateRequest) {
+        LOGGER.info("POST /api/employees/register");
         if (userService.existsByEmail(userCreateRequest.getEmail())) {
             throw new UserExistsException(
                     String.format("User with email %s already exists", userCreateRequest.getEmail()));
@@ -52,6 +57,7 @@ public class EmployeeController {
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void terminateEmployee(@PathVariable Long id) {
+        LOGGER.info("DELETE /api/employees/{}", id);
         Employee employee = employeeService.findById(id);
         employeeService.terminateEmployee(employee);
     }
