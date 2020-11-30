@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class LoanApplication {
     private Integer termMonths;
     private Float interestRatePerYear;
     private String loanReason;
+    private LocalDateTime datetimeApplied;
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
@@ -39,5 +42,6 @@ public class LoanApplication {
         this.status = status;
         this.approvedBy = approvedBy;
         this.appliedBy = appliedBy;
+        this.datetimeApplied = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 }

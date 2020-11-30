@@ -5,6 +5,8 @@ import dev.vabalas.loans.entity.LoanApplication;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 public class EmployeeLoanApplicationResponse {
@@ -14,6 +16,7 @@ public class EmployeeLoanApplicationResponse {
     private final Float interestRatePerYear;
     private final String loanReason;
     private final Customer customer;
+    private final LocalDateTime datetimeApplied;
 
     public static EmployeeLoanApplicationResponse fromLoanApplication(LoanApplication loanApplication) {
         return new EmployeeLoanApplicationResponse(
@@ -22,7 +25,8 @@ public class EmployeeLoanApplicationResponse {
                 loanApplication.getTermMonths(),
                 loanApplication.getInterestRatePerYear(),
                 loanApplication.getLoanReason(),
-                loanApplication.getAppliedBy()
+                loanApplication.getAppliedBy(),
+                loanApplication.getDatetimeApplied()
         );
     }
 }

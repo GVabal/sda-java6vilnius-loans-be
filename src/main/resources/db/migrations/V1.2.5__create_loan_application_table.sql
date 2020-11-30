@@ -6,6 +6,7 @@ CREATE TABLE loan_application
     interest_rate_per_year float NOT NULL,
     loan_reason VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
+    datetime_applied TIMESTAMP NOT NULL,
     employee_id bigint,
     customer_id bigint NOT NULL,
 
