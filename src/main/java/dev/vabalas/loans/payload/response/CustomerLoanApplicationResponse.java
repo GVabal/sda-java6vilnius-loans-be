@@ -14,6 +14,8 @@ public class CustomerLoanApplicationResponse {
     private final Integer amount;
     private final Integer termMonths;
     private final Float interestRatePerYear;
+    private Integer monthlyIncome;
+    private Integer monthlyLiabilities;
     private final String loanReason;
     private final ApplicationStatus status;
     private final LocalDateTime datetimeApplied;
@@ -24,6 +26,8 @@ public class CustomerLoanApplicationResponse {
                 loanApplication.getAmount(),
                 loanApplication.getTermMonths(),
                 loanApplication.getInterestRatePerYear(),
+                loanApplication.getMonthlyIncome(),
+                loanApplication.getMonthlyLiabilities(),
                 loanApplication.getLoanReason(),
                 loanApplication.getStatus(),
                 loanApplication.getDatetimeApplied()

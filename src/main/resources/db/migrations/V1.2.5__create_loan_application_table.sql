@@ -4,6 +4,8 @@ CREATE TABLE loan_application
     amount integer NOT NULL,
     term_months integer NOT NULL,
     interest_rate_per_year float NOT NULL,
+    monthly_income integer NOT NULL,
+    monthly_liabilities integer NOT NULL,
     loan_reason VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
     datetime_applied TIMESTAMP NOT NULL,

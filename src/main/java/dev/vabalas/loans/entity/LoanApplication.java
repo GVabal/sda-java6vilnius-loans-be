@@ -18,6 +18,8 @@ public class LoanApplication {
     private Integer amount;
     private Integer termMonths;
     private Float interestRatePerYear;
+    private Integer monthlyIncome;
+    private Integer monthlyLiabilities;
     private String loanReason;
     private LocalDateTime datetimeApplied;
 
@@ -33,11 +35,14 @@ public class LoanApplication {
     private Customer appliedBy;
 
     public LoanApplication(Integer amount, Integer termMonths, Float interestRatePerYear,
+                           Integer monthlyIncome, Integer monthlyLiabilities,
                            String loanReason, ApplicationStatus status, Employee approvedBy,
                            Customer appliedBy) {
         this.amount = amount;
         this.termMonths = termMonths;
         this.interestRatePerYear = interestRatePerYear;
+        this.monthlyIncome = monthlyIncome;
+        this.monthlyLiabilities = monthlyLiabilities;
         this.loanReason = loanReason;
         this.status = status;
         this.approvedBy = approvedBy;
