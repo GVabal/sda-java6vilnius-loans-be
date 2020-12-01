@@ -126,6 +126,8 @@ Returns:
     "amount": number,
     "termMonths": number,
     "interestRatePerYear": number,
+    "monthlyIncome": number,
+    "monthlyLiabilities": number,
     "loanReason": "string",
     "status": ApplicationStatus[PENDING, APPROVED, REJECTED, TAKEN, COMPLETED]
   },
@@ -143,7 +145,9 @@ Requires body:
 {
   "amount": number,
   "loanReason": "string",
-  "termMonths": number
+  "termMonths": number,
+  "monthlyIncome": number,
+  "monthlyLiabilities": number
 }
 ```
 
@@ -154,6 +158,8 @@ Returns:
   "amount": number,
   "termMonths": number,
   "interestRatePerYear": number,
+  "monthlyIncome": number,
+  "monthlyLiabilities": number,
   "loanReason": "string",
   "status": ApplicationStatus[PENDING, APPROVED, REJECTED, TAKEN, COMPLETED]
 }
@@ -179,6 +185,8 @@ Returns:
     "amount": number,
     "termMonths": number,
     "interestRatePerYear": number,
+    "monthlyIncome": number,
+    "monthlyLiabilities": number,
     "loanReason": "string",
     "customer": {
       "id": number,

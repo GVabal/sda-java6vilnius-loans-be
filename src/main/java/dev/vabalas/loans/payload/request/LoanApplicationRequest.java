@@ -36,10 +36,15 @@ public class LoanApplicationRequest {
     public LoanApplicationRequest(
             @JsonProperty("amount") Integer amount,
             @JsonProperty("termMonths") Integer termMonths,
-            @JsonProperty("loanReason") String loanReason) {
+            @JsonProperty("loanReason") String loanReason,
+            @JsonProperty("monthlyIncome") Integer monthlyIncome,
+            @JsonProperty("monthlyLiabilities") Integer monthlyLiabilities
+            ) {
         this.amount = amount;
         this.termMonths = termMonths;
         this.loanReason = loanReason;
+        this.monthlyIncome = monthlyIncome;
+        this.monthlyLiabilities = monthlyLiabilities;
     }
 
     public LoanApplication toLoanApplication(Customer customer) {
