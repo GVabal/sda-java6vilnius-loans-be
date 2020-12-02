@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 
 @RequiredArgsConstructor
 @Service
@@ -16,18 +17,18 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
 
     @Transactional
-    public void payBackLoan(Float amount, Loan loan, Customer customer) {
+    public void payBackLoan(BigDecimal amount, Loan loan, Customer customer) {
         LOGGER.info("payBackLoan({},{},{})", amount, loan, customer);
         paymentRepository.save(new Payment(PaymentType.INCOMING, amount, loan, customer));
-        Float newAmountPayed = loan.getAmountPayed() + amount;
-        float newAmountToRepay;
-        if (newAmountPayed >= loan.getAmountToRepay()) {
+        BigDecimal newAmountPayed = loan.getAmountPayed().add(amount);
+        BigDecimal newAmountToRepay;
+        if (newAmountPayed.compareTo(loan.getAmountToRepay()) >= 0) {
             newAmountPayed = loan.getAmountToRepay();
-            newAmountToRepay = 0F;
+            newAmountToRepay = BigDecimal.ZERO;
             loan.setStatus(Status.TERMINATED);
             loan.getLoanApplication().setStatus(ApplicationStatus.COMPLETED);
         } else
-            newAmountToRepay = loan.getAmountToRepay() - amount;
+            newAmountToRepay = loan.getAmountToRepay().subtract(amount);
 
         loan.setAmountPayed(newAmountPayed);
         loan.setAmountToRepay(newAmountToRepay);
@@ -37,7 +38,7 @@ public class PaymentService {
         LOGGER.info("payBackLoan({},{})", loan, loanApplication);
         paymentRepository.save(new Payment(
                 PaymentType.OUTGOING,
-                Float.parseFloat(loanApplication.getAmount().toString()),
+                BigDecimal.valueOf(loanApplication.getAmount()),
                 loan,
                 loanApplication.getAppliedBy()));
     }

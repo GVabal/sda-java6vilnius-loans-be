@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -13,8 +14,8 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Float amountToRepay;
-    private Float amountPayed;
+    private BigDecimal amountToRepay;
+    private BigDecimal amountPayed;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -27,9 +28,9 @@ public class Loan {
     @JoinColumn(name = "loan_application_id", nullable = false)
     private LoanApplication loanApplication;
 
-    public Loan(Float amountToRepay, Float amountPayed, Customer customer, LoanApplication loanApplication) {
+    public Loan(BigDecimal amountToRepay, Customer customer, LoanApplication loanApplication) {
         this.amountToRepay = amountToRepay;
-        this.amountPayed = amountPayed;
+        this.amountPayed = BigDecimal.ZERO;
         this.status = Status.ACTIVE;
         this.customer = customer;
         this.loanApplication = loanApplication;

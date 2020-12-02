@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,7 +38,6 @@ public class LoanService {
         LOGGER.info("grantLoan({})", loanApplication);
         Loan loan = loanRepository.save(new Loan(
                 calculateAmountToRepay(loanApplication),
-                0F,
                 loanApplication.getAppliedBy(),
                 loanApplication
         ));
@@ -45,10 +46,11 @@ public class LoanService {
         paymentService.payOutLoan(loan, loanApplication);
     }
 
-    private Float calculateAmountToRepay(LoanApplication loanApplication) {
+    private BigDecimal calculateAmountToRepay(LoanApplication loanApplication) {
         Float extraAmount = ((float) loanApplication.getTermMonths() / 12)
                 * (loanApplication.getInterestRatePerYear() / 100)
                 * loanApplication.getAmount();
-        return loanApplication.getAmount() + extraAmount;
+        return BigDecimal.valueOf(loanApplication.getAmount() + extraAmount)
+                .setScale(2, RoundingMode.HALF_EVEN);
     }
 }

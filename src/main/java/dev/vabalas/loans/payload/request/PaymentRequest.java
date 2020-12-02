@@ -6,6 +6,8 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Data
 public class PaymentRequest {
@@ -13,11 +15,11 @@ public class PaymentRequest {
     private Long loanId;
     @NotNull(message = "Amount must be set")
     @PositiveOrZero(message = "Amount must be positive")
-    private Float amount;
+    private BigDecimal amount;
 
     @JsonCreator
-    public PaymentRequest(@JsonProperty("loanId") Long loanId, @JsonProperty("amount") Float amount) {
+    public PaymentRequest(@JsonProperty("loanId") Long loanId, @JsonProperty("amount") BigDecimal amount) {
         this.loanId = loanId;
-        this.amount = amount;
+        this.amount = amount.setScale(2, RoundingMode.HALF_EVEN);
     }
 }
