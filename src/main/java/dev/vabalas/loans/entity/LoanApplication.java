@@ -36,16 +36,15 @@ public class LoanApplication {
 
     public LoanApplication(Integer amount, Integer termMonths, Float interestRatePerYear,
                            Integer monthlyIncome, Integer monthlyLiabilities,
-                           String loanReason, ApplicationStatus status, Employee approvedBy,
-                           Customer appliedBy) {
+                           String loanReason, Customer appliedBy) {
         this.amount = amount;
         this.termMonths = termMonths;
         this.interestRatePerYear = interestRatePerYear;
         this.monthlyIncome = monthlyIncome;
         this.monthlyLiabilities = monthlyLiabilities;
         this.loanReason = loanReason;
-        this.status = status;
-        this.approvedBy = approvedBy;
+        this.status = ApplicationStatus.PENDING;
+        this.approvedBy = null;
         this.appliedBy = appliedBy;
         this.datetimeApplied = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }

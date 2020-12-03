@@ -55,8 +55,6 @@ public class LoanApplicationRequest {
                 monthlyIncome,
                 monthlyLiabilities,
                 loanReason,
-                ApplicationStatus.PENDING,
-                null,
                 customer
         );
     }
