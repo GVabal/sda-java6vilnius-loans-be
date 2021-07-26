@@ -21,7 +21,8 @@ public class CorsFilter implements Filter {
             final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpResponse.setHeader("Access-Control-Allow-Origin", "*"); // normally, list specific origins instead of "*"
+        // Also, now can use @CrossOrigin(origins = "*") annotation on class or method level
         httpResponse.setHeader(
                 "Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, OPTIONS, DELETE");
         httpResponse.setHeader("Access-Control-Max-Age", "3600");
